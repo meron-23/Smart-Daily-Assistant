@@ -2,34 +2,34 @@ import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
-const schema: any = {
-  description: "Daily plan and tasks",
-  type: SchemaType.OBJECT,
-  properties: {
-    tasks: {
-      type: SchemaType.ARRAY,
-      items: {
-        type: SchemaType.OBJECT,
-        properties: {
-          task: { type: SchemaType.STRING },
-          priority: { type: SchemaType.STRING, enum: ["high", "medium", "low"] },
-          deadline: { type: SchemaType.STRING, nullable: true },
-        },
-        required: ["task", "priority"],
-      },
-    },
-    plan: { type: SchemaType.STRING },
-    followUp: { type: SchemaType.STRING, nullable: true },
-  },
-  required: ["tasks", "plan", "followUp"],
-};
+// Schema defined inline to avoid shadowing/inference issues
 
 export async function processAssistantRequest(message: string, history: any[] = []) {
   const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
     generationConfig: {
       responseMimeType: "application/json",
-      responseSchema: schema,
+      responseSchema: {
+        description: "Daily plan and tasks",
+        type: SchemaType.OBJECT,
+        properties: {
+          tasks: {
+            type: SchemaType.ARRAY,
+            items: {
+              type: SchemaType.OBJECT,
+              properties: {
+                task: { type: SchemaType.STRING },
+                priority: { type: SchemaType.STRING, enum: ["high", "medium", "low"] },
+                deadline: { type: SchemaType.STRING, nullable: true },
+              },
+              required: ["task", "priority"],
+            },
+          },
+          plan: { type: SchemaType.STRING },
+          followUp: { type: SchemaType.STRING, nullable: true },
+        },
+        required: ["tasks", "plan", "followUp"],
+      } as any,
     },
     systemInstruction: {
       role: "system",
