@@ -1,12 +1,13 @@
 // @ts-nocheck
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.NVIDIA_API_KEY,
-  baseURL: "https://integrate.api.nvidia.com/v1",
-});
-
 export async function processAssistantRequest(message: string, history: any[] = []) {
+  // Initialize inside the function to prevent build-time credential errors
+  const openai = new OpenAI({
+    apiKey: process.env.NVIDIA_API_KEY || "fallback_key",
+    baseURL: "https://integrate.api.nvidia.com/v1",
+  });
+
   const systemInstruction = `You are a Smart Daily Assistant. Help users organize their day.
   Identify tasks, deadlines, and priorities.
   If information is missing (like specific times for events), ask exactly one follow-up question in the followUp field.
