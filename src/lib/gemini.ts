@@ -24,7 +24,7 @@ export async function processAssistantRequest(message: string, history: any[] = 
 
   try {
     const formattedHistory = history.map((h: any) => ({
-      role: h.role === "user" ? "user" : "assistant",
+      role: (h.role === "user" ? "user" : "assistant") as "user" | "assistant",
       content: typeof h.parts[0].text === "string" ? h.parts[0].text : JSON.stringify(h.parts[0].text)
     }));
 
