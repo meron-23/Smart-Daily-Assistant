@@ -34,7 +34,7 @@ export async function processAssistantRequest(message: string, history: any[] = 
         { role: "system", content: systemInstruction },
         ...formattedHistory,
         { role: "user", content: message }
-      ],
+      ] as any,
       response_format: { type: "json_object" }
     });
 
