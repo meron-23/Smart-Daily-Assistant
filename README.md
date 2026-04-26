@@ -3,7 +3,7 @@
 A stateless, cross-platform AI assistant that organizes your day using Meta Llama 3.1 70B via NVIDIA NIM. Accessible via a premium Web UI and a Telegram Bot.
 
 ## Live Demo
-- **Web UI**: [smartt-daily-assistant.vercel.app](https://smartt-daily-assistant.vercel.app/)
+- **Web UI**: [smart-daily-asistant.vercel.app](https://smart-daily-asistant-git-main-meronmuluye75-gmailcoms-projects.vercel.app/)
 - **Telegram Bot**: `@[YOUR_BOT_USERNAME]`
 
 ## Architecture
