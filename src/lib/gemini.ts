@@ -28,7 +28,7 @@ export async function processAssistantRequest(message: string, history: any[] = 
       content: typeof h.parts[0].text === "string" ? h.parts[0].text : JSON.stringify(h.parts[0].text)
     }));
 
-    const response = await openai.chat.completions.create({
+    const request: any = {
       model: "meta/llama-3.1-70b-instruct",
       messages: [
         { role: "system", content: systemInstruction },
@@ -36,7 +36,9 @@ export async function processAssistantRequest(message: string, history: any[] = 
         { role: "user", content: message }
       ],
       response_format: { type: "json_object" }
-    } as any);
+    };
+
+    const response = await (openai.chat.completions as any).create(request);
 
     const content = response.choices[0].message.content || "{}";
     return JSON.parse(content);
