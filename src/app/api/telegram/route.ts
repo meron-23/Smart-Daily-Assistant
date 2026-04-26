@@ -59,6 +59,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true });
   } catch (error: any) {
     console.error("Telegram API Error:", error);
-    return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
+    return { ok: true }; // Always return OK to Telegram to stop retries if there's a fatal err
   }
 }
