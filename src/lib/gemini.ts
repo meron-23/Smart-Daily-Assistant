@@ -2,7 +2,7 @@ import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
-const schema = {
+const schema: any = {
   description: "Daily plan and tasks",
   type: SchemaType.OBJECT,
   properties: {
@@ -26,7 +26,7 @@ const schema = {
 
 export async function processAssistantRequest(message: string, history: any[] = []) {
   const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash",
+    model: "gemini-1.5-flash",
     generationConfig: {
       responseMimeType: "application/json",
       responseSchema: schema,
