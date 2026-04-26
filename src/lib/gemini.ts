@@ -34,9 +34,9 @@ export async function processAssistantRequest(message: string, history: any[] = 
         { role: "system", content: systemInstruction },
         ...formattedHistory,
         { role: "user", content: message }
-      ] as any,
+      ],
       response_format: { type: "json_object" }
-    });
+    } as any);
 
     const content = response.choices[0].message.content || "{}";
     return JSON.parse(content);
