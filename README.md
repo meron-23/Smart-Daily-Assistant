@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Smart Daily Assistant Agent
 
-## Getting Started
+A stateless, cross-platform AI assistant that organizes your day using Google Gemini 1.5 Flash. Accessible via a premium Web UI and a Telegram Bot.
 
-First, run the development server:
+## Live Demo
+- **Web UI**: [smartt-daily-assistant.vercel.app](https://smartt-daily-assistant.vercel.app/)
+- **Telegram Bot**: `@[YOUR_BOT_USERNAME]`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Architecture
+This project is built with **Next.js 15 (App Router)** and follows a strictly server-side architecture for AI processing.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Core Intelligence**: Google Gemini 2.5 Flash using structured JSON output (JSON Schema).
+- **Backend**: Next.js API Routes (`/api/chat` and `/api/telegram`).
+- **Web UI**: Modern Vanilla CSS design with glassmorphism and responsive layouts.
+- **Messaging**: Telegram Bot API integration via secure webhooks.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Agentic Behavior
+The assistant is designed to act as a proactive planner rather than a simple chatbot:
+1. **Deconstruction**: Automatically breaks vague user messages into granular tasks.
+2. **Prioritization**: Assigns High/Medium/Low priority badges to every task.
+3. **Reasoning**: Generates a plain-language "Daily Plan" explaining the flow of the day.
+4. **Follow-up Logic**: Identifies missing information (e.g., times, deadines) and asks exactly one clarifying question.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Security Practices
+- **No Client-Side Keys**: The Gemini SDK is only initialized and called in server-side files.
+- **Webhook Security**: The Telegram endpoint validates an `X-Telegram-Bot-Api-Secret-Token` header to ensure requests only come from Telegram.
+- **Environment Variables**: All secrets (Gemini Key, Telegram Token, Webhook Secret) are stored as environment variables.
+- **Public Repo Safety**: `.env` is ignored by Git. A `.env.example` is provided for configuration.
 
-## Learn More
+## Setup & Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/meron-23/Smart-Daily-Assistant.git
+   cd Smart-Daily-Assistant
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Configure Environment Variables**:
+   Create a `.env` file based on `.env.example`:
+   - `GEMINI_API_KEY`: Get from [Google AI Studio](https://aistudio.google.com/).
+   - `TELEGRAM_BOT_TOKEN`: Get from [@BotFather](https://t.me/botfather).
+   - `WEBHOOK_SECRET`: A custom alphanumeric string for security.
 
-## Deploy on Vercel
+4. **Run locally**:
+   ```bash
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
+1. Deploy the project to **Vercel**.
+2. Add the environment variables in the Vercel Dashboard.
+3. Set your Telegram Webhook by visiting (or using curl):
+   `https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://<DEPLOY_URL>/api/telegram&secret_token=<SECRET>`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tech Stack
+- Next.js 15
+- TypeScript
+- Google Generative AI SDK
+- Vanilla CSS
+- Telegram Bot API
